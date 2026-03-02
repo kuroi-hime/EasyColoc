@@ -13,6 +13,16 @@ class Depense extends Model
     protected $fillable = [
         'titre_depense',
         'montant_depense',
-        'date_depense',
+        // 'date_depense',
+        'creator_id',
+        'categorie_id',
     ];
+
+    public function categorie(){
+        return $this->belongsTo(Categorie::class, 'categorie_id', 'id_categorie');
+    }
+
+    public function creator(){
+        return $this->belongsTo(User::class, 'creator_id');
+    }
 }

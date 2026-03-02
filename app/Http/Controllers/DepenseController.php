@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Depense;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDepenseRequest;
 use App\Http\Requests\UpdateDepenseRequest;
+use App\Models\Categorie;
+use App\Models\Depense;
+use Illuminate\Support\Facades\Auth;
 
 class DepenseController extends Controller
 {
@@ -30,7 +32,25 @@ class DepenseController extends Controller
      */
     public function store(StoreDepenseRequest $request)
     {
-        //
+        $id_categorie = $request->categorie_id;
+
+        if($request->nom_categorie){
+            $nouvelleCategorie = Categorie::create([
+                'nom_categorie' => $request->nom_categorie,
+                'colocation_id' => $request->id_colocation
+            ]);
+
+            $id_categorie = $nouvelleCategorie->id_categorie;
+        }
+
+        $depense = Depense::create([
+            'titre_depense' => $request->titre_depense,
+            'montant_depense' => $request->montant_depense,
+            'creator_id' => Auth::id(),
+            'categorie_id' => $id_categorie
+        ]);
+
+        return back()->with('success', 'Dépense créée avec succés!');
     }
 
     /**

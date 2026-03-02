@@ -11,7 +11,7 @@ class StoreDepenseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreDepenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id_colocation' => 'required',
+            'titre_depense' => 'required|string',
+            'montant_depense' => 'required|numeric',
+            'categorie_id' => 'nullable|integer',
+            'nom_categorie' => 'nullable|string'
         ];
     }
 }

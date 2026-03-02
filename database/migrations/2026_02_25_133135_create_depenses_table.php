@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id('id_depense');
             $table->string('titre_depense');
             $table->float('montant_depense');
+            $table->foreignId('creator_id')->constrained('users');
+            $table->foreignId('categorie_id')->constrained('categories', 'id_categorie');
             // $table->timestamps('date_depense');
             $table->timestamps();
         });
